@@ -1,13 +1,21 @@
 package ru.sbt.mipt.oop;
 
-import java.io.IOException;
 import java.util.Arrays;
 
-import static ru.sbt.mipt.oop.SmartHomeStateSaver.saveSmartHomeState;
-
 public class HomeBuilder {
+    private final HomeWriter homeWriter;
 
-    public static void main(String[] args) throws IOException {
+    public HomeBuilder(HomeWriter homeWriter) {
+        this.homeWriter = homeWriter;
+    }
+
+    public static void main(String[] args) {
+        HomeWriter homeWriter = new JsonHomeWriter(Constants.JSON_PATH_FOR_WRITING);
+        HomeBuilder homeBuilder = new HomeBuilder(homeWriter);
+        homeBuilder.run();
+    }
+
+    public void run() {
         Room kitchen = new Room(Arrays.asList(new Light("1", false), new Light("2", true)),
                 Arrays.asList(new Door(false, "1")),
                 "kitchen");
@@ -21,7 +29,6 @@ public class HomeBuilder {
                 Arrays.asList(new Door(false, "4")),
                 "hall");
         SmartHome smartHome = new SmartHome(Arrays.asList(kitchen, bathroom, bedroom, hall));
-        saveSmartHomeState(smartHome);
+        homeWriter.saveSmartHomeState(smartHome);
     }
-
 }

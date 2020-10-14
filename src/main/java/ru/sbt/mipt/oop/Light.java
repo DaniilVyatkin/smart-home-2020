@@ -1,12 +1,17 @@
 package ru.sbt.mipt.oop;
 
-public class Light {
+public class Light implements Actionable {
     private boolean isOn;
     private final String id;
 
     public Light(String id, boolean isOn) {
         this.id = id;
         this.isOn = isOn;
+    }
+
+    @Override
+    public void execute(Action action) {
+        action.applyActionTo(this);
     }
 
     public boolean isOn() {

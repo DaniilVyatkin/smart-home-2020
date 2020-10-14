@@ -3,7 +3,7 @@ package ru.sbt.mipt.oop;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class SmartHome {
+public class SmartHome implements Actionable {
     Collection<Room> rooms;
 
     public SmartHome() {
@@ -12,6 +12,14 @@ public class SmartHome {
 
     public SmartHome(Collection<Room> rooms) {
         this.rooms = rooms;
+    }
+
+    @Override
+    public void execute(Action action) {
+        action.applyActionTo(this);
+        for (Room room: rooms) {
+            room.execute(action);
+        }
     }
 
     public void addRoom(Room room) {
