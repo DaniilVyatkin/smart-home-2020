@@ -18,8 +18,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.2</version>
                 <configuration>
-                    <source>${java-version}</source>
-                    <target>${java-version}</target>
+                    <source>8</source>
+                    <target>8</target>
                     <encoding>${file.encoding}</encoding>
                     <compilerArgument>-Xlint:all</compilerArgument>
                     <showWarnings>true</showWarnings>
@@ -30,7 +30,7 @@
     </build>
 
     <properties>
-        <java-version>1.7</java-version>
+        <java-version>1.8</java-version>
         <sl4j-version>1.5.8</sl4j-version>
     </properties>
 

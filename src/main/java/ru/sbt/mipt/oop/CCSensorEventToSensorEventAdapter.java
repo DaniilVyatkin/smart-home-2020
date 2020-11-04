@@ -1,8 +1,10 @@
 package ru.sbt.mipt.oop;
 
 import com.coolcompany.smarthome.events.CCSensorEvent;
+import ru.sbt.mipt.oop.SensorEvent;
+import ru.sbt.mipt.oop.SensorEventType;
 
-public class CCSensorEventToSensorEventAdapter extends SensorEvent{
+public class CCSensorEventToSensorEventAdapter extends SensorEvent {
     private CCSensorEvent ccSensorEvent;
 
     // пришлось вынести конвертацию типа события из конструктора в отдельную функцию, так как
