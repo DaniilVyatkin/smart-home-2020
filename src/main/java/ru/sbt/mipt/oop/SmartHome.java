@@ -22,11 +22,4 @@ public class SmartHome implements Actionable {
         }
     }
 
-    public void addRoom(Room room) {
-        rooms.add(room);
-    }
-
-    public Collection<Room> getRooms() {
-        return rooms;
-    }
 }

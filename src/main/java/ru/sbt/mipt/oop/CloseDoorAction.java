@@ -11,14 +11,7 @@ public class CloseDoorAction implements Action {
                 System.out.println("Door " + id + " was closed.");
             }
         }
-        if (actionable instanceof Room) {
-            CloseHallDoorAction closeHallDoorAction = new CloseHallDoorAction();
-            closeHallDoorAction.setId(this.id);
-            actionable.execute(closeHallDoorAction);
-        }
     }
-
-
 
     public void setId(String id) {
         this.id = id;

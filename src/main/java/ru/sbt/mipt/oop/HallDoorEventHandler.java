@@ -9,9 +9,9 @@ public class HallDoorEventHandler implements EventHandler {
     public void handle(SensorEvent event, SmartHome smartHome) {
         CommandSender commandSender = new PrinterCommandSender();
         if (event.getType() == DOOR_CLOSED) {
-            CloseDoorAction closeDoorAction = new CloseDoorAction();
-            closeDoorAction.setId(event.getObjectId());
-            smartHome.execute(closeDoorAction);
+            CloseHallDoorAction closeHallDoorAction = new CloseHallDoorAction();
+            closeHallDoorAction.setId(event.getObjectId());
+            smartHome.execute(closeHallDoorAction);
         }
     }
 }
