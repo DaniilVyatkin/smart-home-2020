@@ -1,14 +1,15 @@
 package ru.sbt.mipt.oop;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 public class EventHandlingLoop {
+    private List<EventHandler> eventHandlers;
 
-    public static void handleEvents(SmartHome smartHome, EventGenerator eventGenerator) {
+    public EventHandlingLoop(List<EventHandler> eventHandlers) {
+        this.eventHandlers = eventHandlers;
+    }
 
-        ArrayList<EventHandler> eventHandlers = new ArrayList<>(
-                Arrays.asList(new DoorEventHandler(), new LightEventHandler(), new HallDoorEventHandler()));
+    public void handleEvents(SmartHome smartHome, EventGenerator eventGenerator) {
         // начинаем цикл обработки событий
         while (true) {
             SensorEvent event = eventGenerator.getNextSensorEvent();

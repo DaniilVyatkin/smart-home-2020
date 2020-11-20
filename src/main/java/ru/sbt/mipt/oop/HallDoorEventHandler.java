@@ -9,10 +9,10 @@ public class HallDoorEventHandler implements EventHandler {
     public void handle(SensorEvent event, SmartHome smartHome) {
         if (event.getType() == DOOR_CLOSED) {
             for (Room room: smartHome.getRooms()) {
-                if (room.getName() == "hall") {
-                    System.out.println("Была закрыта входная дверь, начинаю выключать свет во всем доме");
+                if (room.getName().equals("hall")) {
                     for (Door door: room.getDoors()) {
-                        if (door.getId() == event.getObjectId()) {
+                        if (door.getId().equals(event.getObjectId())) {
+                            System.out.println("Была закрыта входная дверь, начинаю выключать свет во всем доме");
                             for (Room targetRoom : smartHome.getRooms()) {
                                 for (Light light : targetRoom.getLights()) {
                                     SensorEvent newSensorEvent = new SensorEvent(LIGHT_OFF, light.getId());
