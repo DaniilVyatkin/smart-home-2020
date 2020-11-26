@@ -23,15 +23,6 @@ public class Application {
         AbstractApplicationContext context = new AnnotationConfigApplicationContext(MyConfiguration.class);
         SensorEventsManager sensorEventsManager = context.getBean(SensorEventsManager.class);
         sensorEventsManager.start();
-
-        // Я правильно понял, что теперь мы вместо нижележащего кода (4 строчки)
-        // используем SensorEventsManager из com.coolcompany.smarthome.events,
-        // который делает примерно все то же самое, но без загрузки дома?
-
-//        HomeLoader homeLoader = new JsonHomeLoader(Constants.JSON_FILE_FOR_LOADING);
-//        EventGenerator eventGenerator = new RandomSensorEventGenerator();
-//        Application application = new Application(homeLoader, eventGenerator);
-//        application.run();
     }
 
     private void run() {

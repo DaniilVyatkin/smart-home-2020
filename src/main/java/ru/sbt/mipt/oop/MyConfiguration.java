@@ -13,29 +13,14 @@ public class MyConfiguration {
     @Bean
     SensorEventsManager sensorEventsManager() {
         SensorEventsManager sensorEventsManager = new SensorEventsManager();
-        sensorEventsManager.registerEventHandler(eventHandlerToCCEventHandlerAdapter(doorEventHandler()));
-        sensorEventsManager.registerEventHandler(eventHandlerToCCEventHandlerAdapter(hallDoorEventHandler()));
-        sensorEventsManager.registerEventHandler(eventHandlerToCCEventHandlerAdapter(lightEventHandler()));
+        sensorEventsManager.registerEventHandler(eventHandlerToCCEventHandlerAdapter(new DoorEventHandler()));
+        sensorEventsManager.registerEventHandler(eventHandlerToCCEventHandlerAdapter(new HallDoorEventHandler()));
+        sensorEventsManager.registerEventHandler(eventHandlerToCCEventHandlerAdapter(new LightEventHandler()));
+        sensorEventsManager.registerEventHandler(eventHandlerToCCEventHandlerAdapter(new AlarmEventHandler()));
         return sensorEventsManager;
     }
 
-    @Bean
-    DoorEventHandler doorEventHandler() {
-        return new DoorEventHandler();
-    }
-
-    @Bean
-    HallDoorEventHandler hallDoorEventHandler() {
-        return new HallDoorEventHandler();
-    }
-
-    @Bean
-    LightEventHandler lightEventHandler() {
-        return new LightEventHandler();
-    }
-
-    @Bean
-    EventHandlerToCCEventHandlerAdapter eventHandlerToCCEventHandlerAdapter(ru.sbt.mipt.oop.EventHandler eventHandler) {
+    static EventHandlerToCCEventHandlerAdapter eventHandlerToCCEventHandlerAdapter(ru.sbt.mipt.oop.EventHandler eventHandler) {
         EventHandlerToCCEventHandlerAdapter eventHandlerToCCEventHandlerAdapter = new EventHandlerToCCEventHandlerAdapter();
         eventHandlerToCCEventHandlerAdapter.setEventHandler(eventHandler);
         return eventHandlerToCCEventHandlerAdapter;
