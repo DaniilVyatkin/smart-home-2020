@@ -6,6 +6,8 @@ import ru.sbt.mipt.oop.*;
 import ru.sbt.mipt.oop.RCcommands.*;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -19,8 +21,9 @@ public class TestRemoteControlCommands {
         SmartHome smartHome = jsonHomeLoaderActual.loadHome();
 
         // Create remote control
-        ProgrammableRemoteControl remoteControl = new ProgrammableRemoteControl();
-        remoteControl.setButton("1", new CloseHallDoorCommandRC(smartHome));
+        HashMap<String, CommandRemoteControl> buttonMap = new HashMap<String, CommandRemoteControl>(Map.ofEntries(
+                Map.entry("1", new CloseHallDoorCommandRC(smartHome))));
+        ProgrammableRemoteControl remoteControl = new ProgrammableRemoteControl(buttonMap);
 
         // Press button
         remoteControl.onButtonPressed("1");
@@ -49,8 +52,9 @@ public class TestRemoteControlCommands {
         SmartHome smartHome = jsonHomeLoaderActual.loadHome();
 
         // Create remote control
-        ProgrammableRemoteControl remoteControl = new ProgrammableRemoteControl();
-        remoteControl.setButton("1", new TurnOffAllLightsCommandRC(smartHome));
+        HashMap<String, CommandRemoteControl> buttonMap = new HashMap<String, CommandRemoteControl>(Map.ofEntries(
+                Map.entry("1", new TurnOffAllLightsCommandRC(smartHome))));
+        ProgrammableRemoteControl remoteControl = new ProgrammableRemoteControl(buttonMap);
 
         // Press button
         remoteControl.onButtonPressed("1");
@@ -79,8 +83,9 @@ public class TestRemoteControlCommands {
         SmartHome smartHome = jsonHomeLoaderActual.loadHome();
 
         // Create remote control
-        ProgrammableRemoteControl remoteControl = new ProgrammableRemoteControl();
-        remoteControl.setButton("1", new TurnOnAllLightsCommandRC(smartHome));
+        HashMap<String, CommandRemoteControl> buttonMap = new HashMap<String, CommandRemoteControl>(Map.ofEntries(
+                Map.entry("1", new TurnOnAllLightsCommandRC(smartHome))));
+        ProgrammableRemoteControl remoteControl = new ProgrammableRemoteControl(buttonMap);
 
         // Press button
         remoteControl.onButtonPressed("1");
@@ -109,8 +114,9 @@ public class TestRemoteControlCommands {
         SmartHome smartHome = jsonHomeLoaderActual.loadHome();
 
         // Create remote control
-        ProgrammableRemoteControl remoteControl = new ProgrammableRemoteControl();
-        remoteControl.setButton("1", new TurnOnHallLightsCommandRC(smartHome));
+        HashMap<String, CommandRemoteControl> buttonMap = new HashMap<String, CommandRemoteControl>(Map.ofEntries(
+                Map.entry("1", new TurnOnHallLightsCommandRC(smartHome))));
+        ProgrammableRemoteControl remoteControl = new ProgrammableRemoteControl(buttonMap);
 
         // Press button
         remoteControl.onButtonPressed("1");
@@ -139,8 +145,9 @@ public class TestRemoteControlCommands {
         SmartHome smartHome = jsonHomeLoaderActual.loadHome();
 
         // Create remote control
-        ProgrammableRemoteControl remoteControl = new ProgrammableRemoteControl();
-        remoteControl.setButton("1", new ActivateAlarmCommandRC());
+        HashMap<String, CommandRemoteControl> buttonMap = new HashMap<String, CommandRemoteControl>(Map.ofEntries(
+                Map.entry("1", new ActivateAlarmCommandRC())));
+        ProgrammableRemoteControl remoteControl = new ProgrammableRemoteControl(buttonMap);
 
         // Press button
         remoteControl.onButtonPressed("1");
@@ -153,8 +160,9 @@ public class TestRemoteControlCommands {
         SmartHome smartHome = jsonHomeLoaderActual.loadHome();
 
         // Create remote control
-        ProgrammableRemoteControl remoteControl = new ProgrammableRemoteControl();
-        remoteControl.setButton("1", new SetAlarmToAlertModeCommandRC());
+        HashMap<String, CommandRemoteControl> buttonMap = new HashMap<String, CommandRemoteControl>(Map.ofEntries(
+                Map.entry("1", new SetAlarmToAlertModeCommandRC())));
+        ProgrammableRemoteControl remoteControl = new ProgrammableRemoteControl(buttonMap);
 
         // Press button
         remoteControl.onButtonPressed("1");

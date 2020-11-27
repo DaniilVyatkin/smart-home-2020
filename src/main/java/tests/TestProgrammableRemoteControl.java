@@ -4,30 +4,16 @@ import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import ru.sbt.mipt.oop.*;
 import ru.sbt.mipt.oop.RCcommands.CloseHallDoorCommandRC;
+import ru.sbt.mipt.oop.RCcommands.CommandRemoteControl;
 import ru.sbt.mipt.oop.RCcommands.TurnOnHallLightsCommandRC;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
 public class TestProgrammableRemoteControl {
-
-    @Test
-    public void testSetButton() {
-
-        // Create home for testing
-        JsonHomeLoader jsonHomeLoaderActual = new JsonHomeLoader(Constants.JS_PATH_RC_HOME_BASE_STATE);
-        SmartHome smartHome = jsonHomeLoaderActual.loadHome();
-
-        // Create remote control
-        ProgrammableRemoteControl remoteControl = new ProgrammableRemoteControl();
-        remoteControl.setButton("1", new TurnOnHallLightsCommandRC(smartHome));
-        try {
-            remoteControl.onButtonPressed("1");
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
-    }
 
     @Test
     public void testOnButtonPressed() {
@@ -36,8 +22,9 @@ public class TestProgrammableRemoteControl {
         SmartHome smartHome = jsonHomeLoaderActual.loadHome();
 
         // Create remote control
-        ProgrammableRemoteControl remoteControl = new ProgrammableRemoteControl();
-        remoteControl.setButton("1", new CloseHallDoorCommandRC(smartHome));
+        HashMap<String, CommandRemoteControl> buttonMap = new HashMap<String, CommandRemoteControl>(Map.ofEntries(
+                Map.entry("1", new CloseHallDoorCommandRC(smartHome))));
+        ProgrammableRemoteControl remoteControl = new ProgrammableRemoteControl(buttonMap);
 
         // Press button
         remoteControl.onButtonPressed("1");
