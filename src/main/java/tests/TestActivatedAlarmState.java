@@ -15,7 +15,7 @@ public class TestActivatedAlarmState {
         Alarm alarm = new Alarm(code);
         AlarmState alarmState = new ActivatedAlarmState(alarm);
         alarmState.activate(code);
-        assertTrue(alarm.getAlarmState() instanceof ActivatedAlarmState);
+        assertTrue(alarm.isActivated());
     }
 
     @Test
@@ -27,7 +27,7 @@ public class TestActivatedAlarmState {
         Alarm alarm = new Alarm(code);
         AlarmState alarmState = new ActivatedAlarmState(alarm);
         alarmState.activate(wrongCode);
-        assertTrue(alarm.getAlarmState() instanceof AlertAlarmState);
+        assertTrue(alarm.isAlert());
     }
 
     @Test
@@ -38,7 +38,7 @@ public class TestActivatedAlarmState {
         Alarm alarm = new Alarm(code);
         AlarmState alarmState = new ActivatedAlarmState(alarm);
         alarmState.deactivate(code);
-        assertTrue(alarm.getAlarmState() instanceof DeactivatedAlarmState);
+        assertTrue(alarm.isDeactivated());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class TestActivatedAlarmState {
         Alarm alarm = new Alarm(code);
         AlarmState alarmState = new ActivatedAlarmState(alarm);
         alarmState.deactivate(wrongCode);
-        assertTrue(alarm.getAlarmState() instanceof AlertAlarmState);
+        assertTrue(alarm.isAlert());
     }
 
     @Test
@@ -61,6 +61,6 @@ public class TestActivatedAlarmState {
         Alarm alarm = new Alarm(code);
         AlarmState alarmState = new ActivatedAlarmState(alarm);
         alarmState.alert();
-        assertTrue(alarm.getAlarmState() instanceof AlertAlarmState);
+        assertTrue(alarm.isAlert());
     }
 }

@@ -21,12 +21,20 @@ public class Alarm {
         alarmState.alert();
     }
 
-    public boolean isCodeCorrect(int code) {
+    boolean isCodeCorrect(int code) {
         return this.code == code;
     }
 
-    public AlarmState getAlarmState() {
-        return alarmState;
+    public boolean isActivated() {
+        return (alarmState instanceof ActivatedAlarmState);
+    }
+
+    public boolean isDeactivated() {
+        return (alarmState instanceof DeactivatedAlarmState);
+    }
+
+    public boolean isAlert() {
+        return (alarmState instanceof AlertAlarmState);
     }
 
     void setAlarmState(AlarmState alarmState) {

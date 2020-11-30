@@ -2,9 +2,7 @@ package tests;
 
 import org.junit.jupiter.api.Test;
 import ru.sbt.mipt.oop.*;
-import ru.sbt.mipt.oop.alarm.ActivatedAlarmState;
 import ru.sbt.mipt.oop.alarm.Alarm;
-import ru.sbt.mipt.oop.alarm.DeactivatedAlarmState;
 
 import static org.junit.Assert.*;
 
@@ -31,7 +29,7 @@ public class TestAlarmEventHandler {
 
         // Compare the resulting alarm state with the expected alarm state
 
-        assertTrue(smartHomeActual.getAlarm().getAlarmState() instanceof ActivatedAlarmState);
+        assertTrue(smartHomeActual.getAlarm().isActivated());
     }
 
     @Test
@@ -56,6 +54,6 @@ public class TestAlarmEventHandler {
 
         // Compare the resulting alarm state with the expected alarm state
 
-        assertTrue(smartHomeActual.getAlarm().getAlarmState() instanceof DeactivatedAlarmState);
+        assertTrue(smartHomeActual.getAlarm().isDeactivated());
     }
 }

@@ -25,4 +25,9 @@ public class MyConfiguration {
         eventHandlerToCCEventHandlerAdapter.setEventHandler(eventHandler);
         return eventHandlerToCCEventHandlerAdapter;
     }
+
+    @Bean
+    Notifier getNotifier() {
+        return new DummySMSNotifier();
+    }
 }

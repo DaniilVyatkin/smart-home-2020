@@ -13,6 +13,7 @@ public class Application {
     private static SmartHome smartHome;
     private final HomeLoader homeLoader;
     private EventGenerator eventGenerator;
+    static Notifier notifier;
 
     public Application(HomeLoader homeLoader, EventGenerator eventGenerator) {
         this.homeLoader = homeLoader;
@@ -23,6 +24,7 @@ public class Application {
         AbstractApplicationContext context = new AnnotationConfigApplicationContext(MyConfiguration.class);
         SensorEventsManager sensorEventsManager = context.getBean(SensorEventsManager.class);
         sensorEventsManager.start();
+        notifier = context.getBean(Notifier.class);
     }
 
     private void run() {
@@ -44,7 +46,7 @@ public class Application {
             System.out.println("Got event: " + event);
 
             for (EventHandler handler : eventHandlers) {
-                EventHandler securityEventHandlerDecorator = new SecurityEventHandlerDecorator(handler);
+                EventHandler securityEventHandlerDecorator = new SecurityEventHandlerDecorator(handler, notifier);
                 securityEventHandlerDecorator.handle(event, smartHome);
             }
         }

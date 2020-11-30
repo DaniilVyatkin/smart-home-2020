@@ -1,18 +1,13 @@
 package tests;
 
-import com.coolcompany.smarthome.events.EventHandler;
-import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import ru.sbt.mipt.oop.*;
 import ru.sbt.mipt.oop.alarm.Alarm;
 import ru.sbt.mipt.oop.alarm.AlertAlarmState;
 import ru.sbt.mipt.oop.alarm.DeactivatedAlarmState;
 
-import java.io.File;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 public class TestSecurityHandlerDecorator {
 
     @Test
@@ -33,10 +28,11 @@ public class TestSecurityHandlerDecorator {
 
         // Create instance of DoorEventHandler to handle the event
         DoorEventHandler doorEventHandler = new DoorEventHandler();
-        SecurityEventHandlerDecorator securityEventHandlerDecorator = new SecurityEventHandlerDecorator(doorEventHandler);
+        SecurityEventHandlerDecorator securityEventHandlerDecorator = new SecurityEventHandlerDecorator(
+                doorEventHandler, new DummySMSNotifier());
         securityEventHandlerDecorator.handle(event, smartHomeActual);
 
-        assertTrue(alarm.getAlarmState() instanceof DeactivatedAlarmState);
+        assertTrue(alarm.isDeactivated());
     }
 
     @Test
@@ -56,10 +52,11 @@ public class TestSecurityHandlerDecorator {
 
         // Create instance of DoorEventHandler to handle the event
         DoorEventHandler doorEventHandler = new DoorEventHandler();
-        SecurityEventHandlerDecorator securityEventHandlerDecorator = new SecurityEventHandlerDecorator(doorEventHandler);
+        SecurityEventHandlerDecorator securityEventHandlerDecorator = new SecurityEventHandlerDecorator(
+                doorEventHandler,new DummySMSNotifier());
         securityEventHandlerDecorator.handle(event, smartHomeActual);
 
-        assertTrue(alarm.getAlarmState() instanceof AlertAlarmState);
+        assertTrue(alarm.isAlert());
     }
 
     @Test
@@ -80,9 +77,10 @@ public class TestSecurityHandlerDecorator {
 
         // Create instance of DoorEventHandler to handle the event
         DoorEventHandler doorEventHandler = new DoorEventHandler();
-        SecurityEventHandlerDecorator securityEventHandlerDecorator = new SecurityEventHandlerDecorator(doorEventHandler);
+        SecurityEventHandlerDecorator securityEventHandlerDecorator = new SecurityEventHandlerDecorator(
+                doorEventHandler, new DummySMSNotifier());
         securityEventHandlerDecorator.handle(event, smartHomeActual);
 
-        assertTrue(alarm.getAlarmState() instanceof AlertAlarmState);
+        assertTrue(alarm.isAlert());
     }
 }

@@ -6,9 +6,11 @@ import ru.sbt.mipt.oop.alarm.AlertAlarmState;
 
 public class SecurityEventHandlerDecorator implements EventHandler {
     private EventHandler wrappedHandler;
+    private Notifier notifier;
 
-    public SecurityEventHandlerDecorator(EventHandler eventHandler) {
+    public SecurityEventHandlerDecorator(EventHandler eventHandler, Notifier notifier) {
         this.wrappedHandler = eventHandler;
+        this.notifier = notifier;
     }
 
     @Override
@@ -18,16 +20,14 @@ public class SecurityEventHandlerDecorator implements EventHandler {
             wrappedHandler.handle(event, smartHome);
         }
         else {
-            if (alarm.getAlarmState() instanceof AlertAlarmState) {
-                System.out.println("Alarm is in alert state and caught some sensor activity!");
-                System.out.println("Sending more SMS!");
+            if (alarm.isAlert()) {
+                notifier.makeNotification();
                 return;
             }
             wrappedHandler.handle(event, smartHome);
-            if (alarm.getAlarmState() instanceof ActivatedAlarmState) {
+            if (alarm.isActivated()) {
                 alarm.alert();
-                System.out.println("Alarm caught some sensor activity!");
-                System.out.println("Sending SMS!");
+                notifier.makeNotification();
             }
         }
     }

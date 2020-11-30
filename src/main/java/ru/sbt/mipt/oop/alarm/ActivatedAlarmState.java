@@ -9,10 +9,7 @@ public class ActivatedAlarmState implements AlarmState {
 
     @Override
     public void activate(int code) {
-        if (alarm.isCodeCorrect(code)) {
-            System.out.println("Alarm is already activated");
-        }
-        else {
+        if (!alarm.isCodeCorrect(code)) {
             alarm.setAlarmState(new AlertAlarmState(alarm));
             System.out.println("Wrong code! Alarm was set to alert state!");
         }
