@@ -24,31 +24,31 @@ public class Application {
         AbstractApplicationContext context = new AnnotationConfigApplicationContext(MyConfiguration.class);
         SensorEventsManager sensorEventsManager = context.getBean(SensorEventsManager.class);
         sensorEventsManager.start();
-        notifier = context.getBean(Notifier.class);
+//        notifier = context.getBean(Notifier.class);
     }
 
-    private void run() {
-        smartHome = homeLoader.loadHome();
-        Alarm alarm = new Alarm(1111);
-        smartHome.setAlarm(alarm);
-
-        ArrayList<EventHandler> eventHandlers = new ArrayList<>(
-                Arrays.asList(
-                        new DoorEventHandler(),
-                        new LightEventHandler(),
-                        new HallDoorEventHandler(),
-                        new AlarmEventHandler()
-                        ));
-        // начинаем цикл обработки событий
-        while (true) {
-            SensorEvent event = eventGenerator.getNextSensorEvent();
-            if (event == null) return;
-            System.out.println("Got event: " + event);
-
-            for (EventHandler handler : eventHandlers) {
-                EventHandler securityEventHandlerDecorator = new SecurityEventHandlerDecorator(handler, notifier);
-                securityEventHandlerDecorator.handle(event, smartHome);
-            }
-        }
-    }
+//    private void run() {
+//        smartHome = homeLoader.loadHome();
+//        Alarm alarm = new Alarm(1111);
+//        smartHome.setAlarm(alarm);
+//
+//        ArrayList<EventHandler> eventHandlers = new ArrayList<>(
+//                Arrays.asList(
+//                        new DoorEventHandler(),
+//                        new LightEventHandler(),
+//                        new HallDoorEventHandler(),
+//                        new AlarmEventHandler()
+//                        ));
+//        // начинаем цикл обработки событий
+//        while (true) {
+//            SensorEvent event = eventGenerator.getNextSensorEvent();
+//            if (event == null) return;
+//            System.out.println("Got event: " + event);
+//
+//            for (EventHandler handler : eventHandlers) {
+//                EventHandler securityEventHandlerDecorator = new SecurityEventHandlerDecorator(handler, notifier);
+//                securityEventHandlerDecorator.handle(event, smartHome);
+//            }
+//        }
+//    }
 }
