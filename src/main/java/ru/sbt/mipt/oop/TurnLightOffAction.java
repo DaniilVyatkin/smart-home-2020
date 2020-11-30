@@ -3,6 +3,10 @@ package ru.sbt.mipt.oop;
 public class TurnLightOffAction implements Action{
     private String id;
 
+    public TurnLightOffAction(String id) {
+        this.id = id;
+    }
+
     @Override
     public void applyActionTo(Actionable actionable) {
         if (actionable instanceof Light) {
@@ -11,9 +15,5 @@ public class TurnLightOffAction implements Action{
                 System.out.println("Light " + this.id + " was turned off.");
             }
         }
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 }

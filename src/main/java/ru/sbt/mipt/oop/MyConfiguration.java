@@ -3,7 +3,10 @@ package ru.sbt.mipt.oop;
 import com.coolcompany.smarthome.events.SensorEventsManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
+import ru.sbt.mipt.oop.RCcommands.*;
+import ru.sbt.mipt.oop.alarm.Alarm;
+import ru.sbt.mipt.oop.rc.RemoteControl;
+import ru.sbt.mipt.oop.rc.RemoteControlRegistry;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,6 +18,8 @@ import java.util.Map;
  */
 @Configuration
 public class MyConfiguration {
+    private int code = 1111;
+    private String rcid = "1";
     @Bean
     SensorEventsManager sensorEventsManager(Collection<EventHandler> eventHandlers) {
         SensorEventsManager sensorEventsManager = new SensorEventsManager();
@@ -62,5 +67,48 @@ public class MyConfiguration {
     com.coolcompany.smarthome.events.EventHandler getEventHandlerAdaptedToCC(EventHandler eventHandler) {
         return new EventHandlerToCCEventHandlerAdapter(
                 new SecurityEventHandlerDecorator(eventHandler, getNotifier()), eventTypeMapper());
+    }
+
+    // Ниже идет конфигурация дома, нужная для конфигурации пульта управления
+    @Bean
+    Alarm getAlarm() {
+        Alarm alarm = new Alarm(code);
+        return alarm;
+    }
+
+    @Bean
+    SmartHome getSmartHome() {
+        HomeLoader homeLoader = new JsonHomeLoader(Constants.JSON_FILE_FOR_LOADING);
+        SmartHome smartHome = homeLoader.loadHome();
+        smartHome.setAlarm(getAlarm());
+        return smartHome;
+    }
+
+    // Ниже идет конфигурация пульта управления
+    @Bean
+    Map getButtonMap() {
+        HashMap<String, CommandRemoteControl> buttonMap = new HashMap<String, CommandRemoteControl>(Map.ofEntries(
+                Map.entry("1", new ActivateAlarmCommandRC(getSmartHome())),
+                Map.entry("2", new SetAlarmToAlertModeCommandRC(getSmartHome())),
+                Map.entry("3", new CloseHallDoorCommandRC(getSmartHome())),
+                Map.entry("4", new TurnOffAllLightsCommandRC(getSmartHome())),
+                Map.entry("A", new TurnOnAllLightsCommandRC(getSmartHome())),
+                Map.entry("B", new TurnOnHallLightsCommandRC(getSmartHome()))
+        ));
+        return buttonMap;
+    }
+
+    @Bean
+    RemoteControl getRemoteControl() {
+        ProgrammableRemoteControl remoteControl = new ProgrammableRemoteControl(getButtonMap());
+        return remoteControl;
+    }
+
+
+    @Bean
+    RemoteControlRegistry getRemoteControlRegistry() {
+        RemoteControlRegistry remoteControlRegistry = new RemoteControlRegistry();
+        remoteControlRegistry.registerRemoteControl(getRemoteControl(), rcid);
+        return remoteControlRegistry;
     }
 }

@@ -29,7 +29,6 @@ public class Constants {
 
     // For remote control testing
     public static final String JS_PATH_RC_HOME_BASE_STATE = "rc_test_home_base_state.js";
-    public static final String JS_PATH_RC_CLOSE_HALL_DOOR = "rc_test_close_hall_door.js";
     public static final String JS_PATH_RC_TURN_OFF_ALL_LIGHTS = "rc_test_turn_off_all_lights.js";
     public static final String JS_PATH_RC_TURN_ON_ALL_LIGHTS = "rc_test_turn_on_all_lights.js";
     public static final String JS_PATH_RC_TURN_ON_HALL_LIGHTS = "rc_test_turn_on_hall_lights.js";

@@ -35,8 +35,8 @@ public class TestProgrammableRemoteControl {
 
         // Compare the resulting home state with the expected home state
         try {
-            File fileActual = new File(Constants.JSON_FILE_TEST_ACTUAL);
-            File fileExpected = new File(Constants.JS_PATH_RC_CLOSE_HALL_DOOR);
+            File fileActual = new File(Constants.JSON_FILE_TEST_ACTUAL, "utf-8");
+            File fileExpected = new File(Constants.JSON_PATH_HALL_DOOR_EXPECTED_TEST_1, "utf-8");
             assertTrue(FileUtils.contentEquals(fileActual, fileExpected));
             fileActual.delete();
         }

@@ -13,8 +13,7 @@ public class DoorEventHandler implements EventHandler {
             smartHome.execute(openDoorAction);
         }
         if (event.getType() == DOOR_CLOSED) {
-            CloseDoorAction closeDoorAction = new CloseDoorAction();
-            closeDoorAction.setId(event.getObjectId());
+            CloseDoorAction closeDoorAction = new CloseDoorAction(event.getObjectId());
             smartHome.execute(closeDoorAction);
         }
     }

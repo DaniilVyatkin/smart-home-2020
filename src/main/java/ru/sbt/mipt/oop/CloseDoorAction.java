@@ -3,6 +3,10 @@ package ru.sbt.mipt.oop;
 public class CloseDoorAction implements Action {
     private String id;
 
+    public CloseDoorAction(String id) {
+        this.id = id;
+    }
+
     @Override
     public void applyActionTo(Actionable actionable) {
         if (actionable instanceof Door) {
@@ -11,16 +15,5 @@ public class CloseDoorAction implements Action {
                 System.out.println("Door " + id + " was closed.");
             }
         }
-        if (actionable instanceof Room) {
-            CloseHallDoorAction closeHallDoorAction = new CloseHallDoorAction();
-            closeHallDoorAction.setId(this.id);
-            actionable.execute(closeHallDoorAction);
-        }
-    }
-
-
-
-    public void setId(String id) {
-        this.id = id;
     }
 }

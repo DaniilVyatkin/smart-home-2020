@@ -13,17 +13,6 @@ public class CloseHallDoorCommandRC implements CommandRemoteControl {
 
     @Override
     public void execute() {
-        Collection<Room> rooms = smartHome.getRooms();
-        for (Room room : rooms) {
-            if (room.getName().equals("hall")) {
-                Collection<Door> doors = room.getDoors();
-                for (Door door : doors) {
-                    CloseDoorAction closeDoorAction = new CloseDoorAction();
-                    closeDoorAction.setId(door.getId());
-                    smartHome.execute(closeDoorAction);
-                }
-                break;
-            }
-        }
+        smartHome.execute(new CloseHallDoorAction(smartHome));
     }
 }

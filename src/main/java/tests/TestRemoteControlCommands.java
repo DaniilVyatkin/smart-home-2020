@@ -4,6 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import ru.sbt.mipt.oop.*;
 import ru.sbt.mipt.oop.RCcommands.*;
+import ru.sbt.mipt.oop.alarm.Alarm;
 
 import java.io.File;
 import java.util.HashMap;
@@ -34,8 +35,8 @@ public class TestRemoteControlCommands {
 
         // Compare the resulting home state with the expected home state
         try {
-            File fileActual = new File(Constants.JSON_FILE_TEST_ACTUAL);
-            File fileExpected = new File(Constants.JS_PATH_RC_CLOSE_HALL_DOOR);
+            File fileActual = new File(Constants.JSON_FILE_TEST_ACTUAL, "utf-8");
+            File fileExpected = new File(Constants.JSON_PATH_HALL_DOOR_EXPECTED_TEST_1, "utf-8");
             assertTrue(FileUtils.contentEquals(fileActual, fileExpected));
             fileActual.delete();
         }
@@ -140,31 +141,42 @@ public class TestRemoteControlCommands {
 
     @Test
     public void TestActivateAlarmCommandRC() {
+        int code = 1;
         // Create home for testing
         JsonHomeLoader jsonHomeLoaderActual = new JsonHomeLoader(Constants.JS_PATH_RC_HOME_BASE_STATE);
         SmartHome smartHome = jsonHomeLoaderActual.loadHome();
+        Alarm alarm = new Alarm(code);
+        smartHome.setAlarm(alarm);
 
         // Create remote control
         HashMap<String, CommandRemoteControl> buttonMap = new HashMap<String, CommandRemoteControl>(Map.ofEntries(
-                Map.entry("1", new ActivateAlarmCommandRC())));
+                Map.entry("1", new ActivateAlarmCommandRC(smartHome))));
         ProgrammableRemoteControl remoteControl = new ProgrammableRemoteControl(buttonMap);
+        remoteControl.setCode(code);
 
         // Press button
         remoteControl.onButtonPressed("1");
+
+        assertTrue(smartHome.getAlarm().isActivated());
     }
 
     @Test
     public void TestSetAlarmToAlertModeCommandRC() {
+        int code = 1;
         // Create home for testing
         JsonHomeLoader jsonHomeLoaderActual = new JsonHomeLoader(Constants.JS_PATH_RC_HOME_BASE_STATE);
         SmartHome smartHome = jsonHomeLoaderActual.loadHome();
+        Alarm alarm = new Alarm(code);
+        smartHome.setAlarm(alarm);
 
         // Create remote control
         HashMap<String, CommandRemoteControl> buttonMap = new HashMap<String, CommandRemoteControl>(Map.ofEntries(
-                Map.entry("1", new SetAlarmToAlertModeCommandRC())));
+                Map.entry("1", new SetAlarmToAlertModeCommandRC(smartHome))));
         ProgrammableRemoteControl remoteControl = new ProgrammableRemoteControl(buttonMap);
 
         // Press button
         remoteControl.onButtonPressed("1");
+
+        assertTrue(smartHome.getAlarm().isAlert());
     }
 }

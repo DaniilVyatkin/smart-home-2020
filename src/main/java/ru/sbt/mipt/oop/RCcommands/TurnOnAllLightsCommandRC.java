@@ -13,14 +13,6 @@ public class TurnOnAllLightsCommandRC implements CommandRemoteControl {
 
     @Override
     public void execute() {
-        Collection<Room> rooms = smartHome.getRooms();
-        for (Room room: rooms) {
-            Collection<Light> lights = room.getLights();
-            for (Light light:lights) {
-                TurnLightOnAction turnLightOnAction = new TurnLightOnAction();
-                turnLightOnAction.setId(light.getId());
-                smartHome.execute(turnLightOnAction);
-            }
-        }
+        smartHome.execute(new TurnAllLightsOnAction());
     }
 }
