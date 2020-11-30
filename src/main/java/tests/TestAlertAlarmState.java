@@ -16,7 +16,7 @@ public class TestAlertAlarmState {
         alarm.alert();
         AlarmState alarmState = new AlertAlarmState(alarm);
         alarmState.activate(code);
-        assertTrue(alarm.isActivated());
+        assertTrue(alarm.isAlert());
     }
 
     @Test
